@@ -1,4 +1,13 @@
+# YateBTS 2024 - Baseband Training Version
+
+This repository is based on https://github.com/briskspirit/bts and provides a simplified setup to
+get Yate/YateBTS up and running on a RaspberryPi5. We removed files/scripts not utilized by the training.
+
+The setup is tested and known to work with the 16GB version of the RPi5.
+All information below come from the original repository.
+
 # YateBTS 2024
+
 
 Everything to build and run the latest Yate + YateBTS + bladeRF xA4 for an old GSM 2G base station.
 

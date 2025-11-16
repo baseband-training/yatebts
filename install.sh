@@ -40,9 +40,15 @@ make -j$(nproc)
 sudo make install
 sudo ldconfig
 
-# Update bladeRF firmware and FPGA
-# *(0.15.3 and 2.4.0 are tested)*
-sudo $script_path/update_bladerf.sh
+
+# Update bladeRF Firmware
+read -p "Do you want to update the bladeRF firmware (requires bladeRF to be connected)? (y/n): " bladerf_firmware_update
+if [[ "$bladerf_firmware_update" =~ ^[Yy]$ ]]; then
+    # Update bladeRF firmware and FPGA
+    # *(0.15.3 and 2.4.0 are tested)*
+    sudo $script_path/update_bladerf.sh
+fi
+
 
 # Install Yate and YateBTS
 cd $script_path/yate
@@ -68,24 +74,11 @@ sudo chmod g+w /usr/local/etc/yate/*.conf
 echo "@yate hard nice -20
 @yate hard rtprio 99" | sudo tee -a /etc/security/limits.conf
 
-# Install Yateas a service
-read -p "Do you want to install the Yate as a service? (y/n): " service_install
-if [[ "$service_install" =~ ^[Yy]$ ]]; then
-    cd $script_path
-    ./service_install.sh
-fi
-
 # Install Yate web application
 read -p "Do you want to install the NiPC web application with dependencies (Apache2 and PHP)? (y/n): " nipc_install
 if [[ "$nipc_install" =~ ^[Yy]$ ]]; then
     cd $script_path
     ./nipc_install.sh
-fi
-
-read -p "Do you want to install pySim for SIM card programming? (y/n): " pysim_install
-if [[ "$pysim_install" =~ ^[Yy]$ ]]; then
-    cd $script_path
-    ./pysim_install.sh
 fi
 
 echo "== Installation has been completed successfully =="
